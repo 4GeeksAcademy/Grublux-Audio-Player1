@@ -61,13 +61,13 @@ const MainPlayer = () => {
     ]
 
     const playAudio = (ind) => {
-        if ((ind <= (tunesArray.length - 1)) && (ind >= 0)) {
-            audioJS.src = tunesArray[ind].url;
-            audioJS.play();
-            setCurrentSong(ind);
-            setPlaying(true);
+        // if ((ind <= (tunesArray.length - 1)) && (ind >= 0)) {
+        audioJS.src = tunesArray[ind].url;
+        audioJS.play();
+        setCurrentSong(ind);
+        setPlaying(true);
 
-        }
+        // }
 
     }
 
@@ -81,8 +81,9 @@ const MainPlayer = () => {
             {tunesArray.map(
                 (songObj, ind) => {
                     return (
-                        <div className="col-7   text-white p-1" key={ind}
-                            style={{ backgroundColor: currentSong == ind ? "gray" : "black" }}
+                        <div className={"col-7   text-white p-1" + (currentSong == ind ? ' bg-secondary' : ' bg-dark')}
+                            key={ind}
+                            // style={{ backgroundColor: currentSong == ind ? "gray" : "black" }}
                             onClick={() => {
                                 playAudio(ind);
 
@@ -96,7 +97,8 @@ const MainPlayer = () => {
             <div className="col-7  bg-dark text-white text-center p-1">
                 <audio ref={elm => audioJS = elm} />
                 <button className="fs-2 me-5"
-                    onClick={() => playAudio(currentSong - 1)
+                    onClick={() => currentSong == (0) ? playAudio(tunesArray.length - 1)
+                        : playAudio(currentSong - 1)
                     }
                 ><i className="fa-solid fa-backward"></i></button>
                 <button className="playerButton text-white fs-2 bg-dark"
@@ -111,7 +113,8 @@ const MainPlayer = () => {
                     style={{ display: playing ? "inline" : "none" }}
                 ><i className="fa-solid fa-pause"></i></button>
                 <button className="fs-2 ms-5"
-                    onClick={() => playAudio(currentSong + 1)
+                    onClick={() => currentSong == (tunesArray.length - 1) ? playAudio(0)
+                        : playAudio(currentSong + 1)
                     }
                 ><i className="fa-solid fa-forward"></i></button>
             </div>
